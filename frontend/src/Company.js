@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 //import './Company.css';
 
 class Company extends Component {
-  handleChange(evt) {
-    // runs on every keystroke
-    this.setState({
-      fullName: evt.target.value
-    });
-  }
-
   render() {
     return (
       <div className="Company">
