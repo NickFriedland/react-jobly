@@ -25,20 +25,23 @@ class Search extends Component {
 
   render() {
     return (
-      <div class="Search input-group mb-3">
-        <form class="form-inline" onSubmit={this.handleSubmit}>
+      <div className="Search input-group">
+        <form
+          className="form-inline col-md-12 my-4"
+          onSubmit={this.handleSubmit}
+        >
           <input
             type="text"
-            className="form-control"
+            className="form-control col-lg-10"
             value={this.state.term}
             onChange={this.handleChange}
-            placeholder="Enter search term.."
+            placeholder="Enter search term"
             name="search"
             aria-label="Recipient's username"
             aria-describedby="button-addon2"
           />
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit">
+            <button class="btn btn-primary" type="submit">
               Submit
             </button>
           </div>
