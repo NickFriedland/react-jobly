@@ -6,7 +6,7 @@ class NotFound extends Component {
   render() {
     return (
       <div className="NotFound">
-        <h1>Hello From NotFound</h1>;
+        <h1>Hello From NotFound</h1>
       </div>
     );
   }

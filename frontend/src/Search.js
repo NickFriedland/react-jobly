@@ -25,18 +25,28 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="Search">
-        <form onSubmit={this.handleSubmit}>
+      <div class="Search input-group mb-3">
+        <form class="form-inline" onSubmit={this.handleSubmit}>
           <input
             type="text"
-            name="term"
+            className="form-control"
             value={this.state.term}
             onChange={this.handleChange}
+            placeholder="Enter search term.."
+            name="search"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
           />
-          <button>Submit</button>
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+            >
+              Submit
+            </button>
+          </div>
         </form>
-        {/* Conditional logic determines if search renders
-        Companies child or Jobs child */}
       </div>
     );
   }
