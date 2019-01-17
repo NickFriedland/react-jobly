@@ -31,7 +31,7 @@ class NavBar extends Component {
       };
 
       return (
-        <nav className="Navigation navbar sticky-top shadow-sm border-bottom navbar-expand-md">
+        <nav className="Navigation navbar sticky-top shadow-sm border-bottom navbar-expand-md mb-4 bg-white">
           <NavLink exact to="/" className="navbar-brand">
             Jobly
           </NavLink>

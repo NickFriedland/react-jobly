@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Jobs.css';
-import styled from 'styled-components';
 import JoblyApi from './JoblyApi.js';
 import Search from './Search.js';
+import JobCard from './JobCard.js';
 import { Link } from 'react-router-dom';
 
 class Jobs extends Component {
@@ -35,15 +35,14 @@ class Jobs extends Component {
 
   render() {
     return (
-      <div className="pt-5">
-        <div className="Jobs col-md-8 offset-md-2">
-          <h1>Hello From Jobs</h1>
-          <Search searchFilter={this.searchJobs} />
-          {this.state.jobs.map(job => (
-            <Link to={`/jobs/${job.id}`}>
-              <div>{job.title}</div>
-            </Link>
-          ))}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-10 offset-md-1">
+            <Search searchFilter={this.searchJobs} />
+            {this.state.jobs.map(job => (
+              <JobCard job={job} />
+            ))}
+          </div>
         </div>
       </div>
     );
