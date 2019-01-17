@@ -6,17 +6,15 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: {
-        username: '',
-        password: '',
-        hashedPassword: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        photo_url: '',
-        loginToken: '',
-        is_admin: ''
-      }
+      username: '',
+      password: '',
+      // hashedPassword: '',
+      first_name: '',
+      last_name: '',
+      email: ''
+      // photo_url: '',
+      // loginToken: '',
+      // is_admin: ''
     };
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
@@ -35,8 +33,8 @@ class Login extends Component {
     // //Creates a user object to send to the createToken file (backend)
     // let userObject = {
     //   user: {
-    //     username: this.state.login.username,
-    //     is_admin: this.state.login.is_admin
+    //     username: this.state.username,
+    //     is_admin: this.state.is_admin
     //   }
     // };
 
@@ -45,6 +43,8 @@ class Login extends Component {
 
     //Store token locally
     localStorage.setItem('token', obtainedToken);
+    localStorage.setItem('username', this.state.username);
+    console.log(localStorage);
     return obtainedToken;
   }
 
@@ -59,19 +59,17 @@ class Login extends Component {
     );
     //sets the state in this file with inputs from the form. Also adds a token from above
     this.setState({
-      login: {
-        username: evt.target.username,
-        password: evt.target.password,
-        first_name: evt.target.first,
-        last_name: evt.target.last,
-        email: evt.target.email,
-        photo_url: evt.target.photo_url
-        // loginToken: this.getStoreToken()
-      }
+      username: evt.target.username,
+      password: evt.target.password,
+      first_name: evt.target.first,
+      last_name: evt.target.last,
+      email: evt.target.email,
+      photo_url: evt.target.photo_url
+      // loginToken: this.getStoreToken()
     });
 
     //How to check if user exists inside the database???
-    if (this.state.login.email) {
+    if (this.state.email) {
       this.register();
     } else {
       this.login();
@@ -81,8 +79,8 @@ class Login extends Component {
   //Modify this. See what data needs to go to createUser function
   async register() {
     try {
-      let response = await JoblyApi.createUser(this.state.login);
-      this.setState({ login: response });
+      let response = await JoblyApi.createUser(this.state);
+      this.setState({ ...response });
 
       // also get token and set token locally
       this.getStoreToken(response);
@@ -93,8 +91,8 @@ class Login extends Component {
 
   async login() {
     try {
-      let response = await JoblyApi.loginUser(this.state.login);
-      this.setState({ login: response });
+      let response = await JoblyApi.loginUser(this.state);
+      this.setState({ ...response });
 
       // also get token and set token locally
       this.getStoreToken(response);
@@ -106,7 +104,7 @@ class Login extends Component {
   // May not need handleChange
   handleChange(evt) {
     // runs on every keystroke
-    console.log('---inside login.js handleChange ', evt.target);
+    // console.log('---inside login.js handleChange ', evt.target);
     this.setState({
       [evt.target.name]: evt.target.value
       // [evt.target.login.password]: evt.target.value,
@@ -129,68 +127,68 @@ class Login extends Component {
           </div>
           <div className="card">
             <div className="card-body">
-              <form class="form-inline" onSubmit={this.handleSubmit}>
-                <div class="form-group">
+              <form className="form-inline" onSubmit={this.handleSubmit}>
+                <div className="form-group">
                   <label>Username</label>
                   <input
                     name="username"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     onChange={this.handleChange}
-                    value={this.state.login.username}
+                    value={this.state.username}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Password</label>
                   <input
                     name="password"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     onChange={this.handleChange}
-                    value={this.state.login.password}
+                    value={this.state.password}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>First Name</label>
                   <input
                     name="first_name"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     onChange={this.handleChange}
-                    value={this.state.login.first_name}
+                    value={this.state.first_name}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Last Name</label>
                   <input
                     name="last_name"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     onChange={this.handleChange}
-                    value={this.state.login.last_name}
+                    value={this.state.last_name}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Email</label>
                   <input
                     name="email"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     onChange={this.handleChange}
-                    value={this.state.login.email}
+                    value={this.state.email}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Photo URL</label>
                   <input
                     name="photo_url"
                     type="url"
-                    class="form-control"
+                    className="form-control"
                     onChange={this.handleChange}
-                    value={this.state.login.photo_url}
+                    value={this.state.photo_url}
                   />
                 </div>
-                <button class="btn btn-primary float-right" type="submit">
+                <button className="btn btn-primary float-right" type="submit">
                   Submit
                 </button>
               </form>

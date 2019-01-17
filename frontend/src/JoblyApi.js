@@ -63,14 +63,14 @@ class JoblyApi {
   //calls register function in user route '/' which calls the register function in the model with data which will be accessed as data.username
   static async createUser(data) {
     console.log('Inside createUser');
-    let res = await this.request(`users/`, { data: data }, 'post');
+    let res = await this.request(`users/`, data, 'post');
     return res;
   }
 
   // This hits /login which calls User.authenticate which has req.body as its argument
   static async loginUser(data) {
     console.log('Inside loginUser');
-    let res = await this.request(`login`, { data: data }, 'post');
+    let res = await this.request(`login`, data, 'post');
     return res;
   }
 }
