@@ -25,9 +25,9 @@ class Jobs extends Component {
 
   async searchJobs(searchTerm) {
     console.log('Inside searchJobs Jobs.js');
-    let response = await JoblyApi.searchJobs(searchTerm);
-    this.setState({ jobs: response });
     try {
+      let response = await JoblyApi.searchJobs(searchTerm);
+      this.setState({ jobs: response });
     } catch (error) {
       throw new Error('Searching for Job:  Not found');
     }

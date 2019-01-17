@@ -2,7 +2,27 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 // import './NavBar.css';
 
+// global flag to easily tell if we're logged in
+let LOGGED_IN = false;
 class NavBar extends Component {
+  //PV added
+  constructor(props) {
+    super(props);
+    this.state = { loginState: false };
+  }
+
+  // PV added
+  checkLoggedInfrontEnd() {
+    // let's see if we're logged in
+    let token = localStorage.getItem('token');
+    let username = localStorage.getItem('username');
+
+    if (token && username) {
+      LOGGED_IN = true;
+      this.setState({ loginState: LOGGED_IN });
+    }
+  }
+
   render() {
     {
       const activeStyle = {
@@ -32,10 +52,16 @@ class NavBar extends Component {
               </NavLink>
             </li>
             <li className="nav-item mr-4">
-              {/* LOGOUT does this need to be a separate component/route? */}
-              <NavLink exact to="/logout" className="nav-link">
-                Logout
-              </NavLink>
+              {/* PV edits */}
+              {this.state.loginState ? (
+                <NavLink exact to="/logout" className="nav-link">
+                  Logout
+                </NavLink>
+              ) : (
+                <NavLink exact to="/login" className="nav-link">
+                  Login
+                </NavLink>
+              )}
             </li>
           </ul>
         </nav>
