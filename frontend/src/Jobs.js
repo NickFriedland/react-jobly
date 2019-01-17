@@ -17,7 +17,8 @@ class Jobs extends Component {
   render() {
     return (
       <div className="Jobs">
-        <h1>Hello From Jobs</h1>;{/* <Link to={`/jobs/${id}`}>{}</Link> */}
+        <h1>Hello From Jobs</h1>
+        {/* <Link to={`/jobs/${id}`}>{}</Link> */}
       </div>
     );
   }
