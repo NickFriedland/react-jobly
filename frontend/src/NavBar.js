@@ -42,8 +42,8 @@ class NavBar extends Component {
           </li>
           <li className="nav-item mr-4">
             {this.props.loginstate ? (
-              <NavLink exact to="/logout" className="nav-link">
-                Logout
+              <NavLink exact to="/" className="nav-link">
+                {this.props.logoutstate()}Logout
               </NavLink>
             ) : (
               <NavLink exact to="/login" className="nav-link">

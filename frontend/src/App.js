@@ -6,6 +6,7 @@ import NavBar from './NavBar.js';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import JoblyApi from './JoblyApi.js'; //For testing only
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 // global flag to easily tell if we're logged in
 // let LOGGED_IN = undefined;
@@ -18,6 +19,7 @@ class App extends Component {
     this.changeStateWithLoginOrSignup = this.changeStateWithLoginOrSignup.bind(
       this
     );
+    this.changeStateWithLogout = this.changeStateWithLogout.bind(this);
     console.log("--- App's this.state ", this.state);
   }
 
@@ -34,7 +36,7 @@ class App extends Component {
       if (token) {
         let response = await JoblyApi.getUser(username);
         console.log('in app.js, cdidMount, response is', response);
-        this.setState({ loginState: token });
+        this.setState({ loginToken: token });
 
         console.log('In app.js, cDidMount, state is ', this.state);
         this.setState({ user: response });
@@ -79,6 +81,13 @@ class App extends Component {
     this.setState({ user: userInfo });
   }
 
+  changeStateWithLogout() {
+    console.log('In App.js Logout function');
+    localStorage.clear();
+    this.setState({ loginToken: '' });
+    return <Redirect to="/" />;
+  }
+
   render() {
     // console.log('Inside App.js');
     // JoblyApi.getCompany('apple').then(res => console.log('get company', res));
@@ -92,6 +101,7 @@ class App extends Component {
           {...this.props}
           loginstate={this.state.loginToken}
           userInfo={this.state.user}
+          logoutState={this.changeStateWithLogout}
         />
         <Routes
           {...this.props}
