@@ -11,10 +11,11 @@ class Login extends Component {
       // hashedPassword: '',
       first_name: '',
       last_name: '',
-      email: ''
-      // photo_url: '',
+      email: '',
+      photo_url: '',
       // loginToken: '',
       // is_admin: ''
+      registerForm: false
     };
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
@@ -47,7 +48,7 @@ class Login extends Component {
     return obtainedToken;
   }
 
-  handleSubmit(evt) {
+  async handleSubmit(evt) {
     evt.preventDefault();
     // runs on submit
     console.log(
@@ -69,9 +70,9 @@ class Login extends Component {
 
     //How to check if user exists inside the database???
     if (this.state.email) {
-      this.register();
+      await this.register();
     } else {
-      this.login();
+      await this.login();
     }
   }
 
@@ -119,14 +120,26 @@ class Login extends Component {
     });
   }
 
+  showRegisterForm = evt => {
+    this.setState({ registerForm: true });
+  };
+
+  showLoginForm = evt => {
+    this.setState({ registerForm: false });
+  };
+
   render() {
     return (
       <div className="Login pt-5">
         <div className="Login container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
           <div className="d-flex justify-content-end">
             <div className="btn-group">
-              <button className="btn btn-primary active ">Login</button>
-              <button className="btn btn-primary">Sign-up</button>
+              <button onClick={this.showLoginForm} className="btn-primary">
+                Login
+              </button>
+              <button onClick={this.showRegisterForm} className="btn-primary">
+                Sign Up
+              </button>
             </div>
           </div>
           <div className="card">
@@ -152,46 +165,50 @@ class Login extends Component {
                     value={this.state.password}
                   />
                 </div>
-                <div className="form-group">
-                  <label>First Name</label>
-                  <input
-                    name="first_name"
-                    type="text"
-                    className="form-control"
-                    onChange={this.handleChange}
-                    value={this.state.first_name}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Last Name</label>
-                  <input
-                    name="last_name"
-                    type="text"
-                    className="form-control"
-                    onChange={this.handleChange}
-                    value={this.state.last_name}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input
-                    name="email"
-                    type="text"
-                    className="form-control"
-                    onChange={this.handleChange}
-                    value={this.state.email}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Photo URL</label>
-                  <input
-                    name="photo_url"
-                    type="url"
-                    className="form-control"
-                    onChange={this.handleChange}
-                    value={this.state.photo_url}
-                  />
-                </div>
+                {this.state.registerForm && (
+                  <>
+                    <div className="form-group">
+                      <label>First Name</label>
+                      <input
+                        name="first_name"
+                        type="text"
+                        className="form-control"
+                        onChange={this.handleChange}
+                        value={this.state.first_name}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Last Name</label>
+                      <input
+                        name="last_name"
+                        type="text"
+                        className="form-control"
+                        onChange={this.handleChange}
+                        value={this.state.last_name}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Email</label>
+                      <input
+                        name="email"
+                        type="text"
+                        className="form-control"
+                        onChange={this.handleChange}
+                        value={this.state.email}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Photo URL</label>
+                      <input
+                        name="photo_url"
+                        type="url"
+                        className="form-control"
+                        onChange={this.handleChange}
+                        value={this.state.photo_url}
+                      />
+                    </div>
+                  </>
+                )}
                 <button className="btn btn-primary float-right" type="submit">
                   Submit
                 </button>

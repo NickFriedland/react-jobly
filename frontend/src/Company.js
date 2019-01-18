@@ -6,14 +6,22 @@ import JoblyApi from './JoblyApi';
 class Company extends Component {
   constructor(props) {
     super(props);
-    this.state = { jobs: [] };
+    this.state = {
+      name: '',
+      description: '',
+      jobs: []
+    };
   }
 
   async componentDidMount(handle) {
     try {
       const handle = this.props.match.params.company;
       let response = await JoblyApi.getCompany(handle);
-      this.setState({ jobs: response.jobs });
+      this.setState({
+        name: response.name,
+        description: response.description,
+        jobs: response.jobs
+      });
     } catch (error) {
       throw new Error('Jobs did not mount');
     }
@@ -25,6 +33,8 @@ class Company extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 offset-md-1">
+              <h5>{this.state.name}</h5>
+              <p>{this.state.description}</p>
               {this.state.jobs.map(job => (
                 <JobCard key={job.id} job={job} />
               ))}

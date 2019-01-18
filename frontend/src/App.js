@@ -7,14 +7,17 @@ import JoblyApi from './JoblyApi.js'; //For testing only
 
 // global flag to easily tell if we're logged in
 let LOGGED_IN = undefined;
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { loginState: false };
-    this.checkLoggedInfrontEnd = this.checkLoggedInfrontEnd.bind(this);
+    this.checkLocalStorageLogin = this.checkLocalStorageLogin.bind(this);
   }
 
-  checkLoggedInfrontEnd() {
+  // componentDiDMount to check for state change - local storage login
+
+  checkLocalStorageLogin() {
     // let's see if we're logged in
     let token = localStorage.getItem('token');
     let username = localStorage.getItem('username');

@@ -34,6 +34,11 @@ class Companies extends Component {
     }
   }
 
+  passCompanyInfo = handle => {
+    let company = this.state.companies.handle;
+    return company;
+  };
+
   render() {
     return (
       <div className="container">

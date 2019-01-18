@@ -3,6 +3,18 @@ import React, { Component } from 'react';
 // import styled from 'styled-components';
 
 class JobCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      applied: false
+    };
+    this.toggleApplied = this.toggleApplied.bind(this);
+  }
+
+  toggleApplied() {
+    this.setState();
+  }
+
   render() {
     return (
       <div className="JobCard">
@@ -13,7 +25,12 @@ class JobCard extends Component {
                 <b>{this.props.job.title}</b>
               </div>
               <div className="col-2">
-                <button className="danger">Applied</button>
+                <button
+                  onClick={this.toggleApplied}
+                  className="apply-button danger"
+                >
+                  Applied
+                </button>
               </div>
               <div className="col-10">
                 <p>{this.props.job.salary}</p>

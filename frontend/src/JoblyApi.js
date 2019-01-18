@@ -73,6 +73,9 @@ class JoblyApi {
     let res = await this.request(`login`, data, 'post');
     return res;
   }
+
+  // PLACEHOLDER static getUser
+  // PLACEHOLDER static apply
 }
 
 export default JoblyApi;
