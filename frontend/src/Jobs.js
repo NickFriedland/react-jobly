@@ -15,22 +15,15 @@ class Jobs extends Component {
   async componentDidMount() {
     console.log('Inside componentDidMount Jobs.js');
 
-    try {
-      let response = await JoblyApi.getJobs('/');
-      this.setState({ jobs: response });
-    } catch (error) {
-      throw new Error('Jobs did not mount');
-    }
+    let response = await JoblyApi.getJobs('/');
+    this.setState({ jobs: response });
   }
 
   async searchJobs(searchTerm) {
     console.log('Inside searchJobs Jobs.js');
-    try {
-      let response = await JoblyApi.searchJobs(searchTerm);
-      this.setState({ jobs: response });
-    } catch (error) {
-      throw new Error('Searching for Job:  Not found');
-    }
+
+    let response = await JoblyApi.searchJobs(searchTerm);
+    this.setState({ jobs: response });
   }
 
   render() {

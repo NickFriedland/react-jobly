@@ -17,19 +17,19 @@ class Routes extends Component {
     return (
       <div className="Routes">
         <Switch>
-          <Route {...this.props} exact path="/login" render={() => <Login />} />
+          <Route
+            {...this.props}
+            exact
+            path="/login"
+            render={props => <Login {...this.props} {...props} />}
+          />
           <Route
             {...this.props}
             exact
             path="/logout"
             render={() => <Logout />}
           />
-          <ProtectedRoute
-            {...this.props}
-            exact
-            path="./:companyOrJob"
-            render={props => <Search {...props} />}
-          />
+
           <ProtectedRoute
             {...this.props}
             exact

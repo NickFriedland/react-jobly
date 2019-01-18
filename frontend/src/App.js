@@ -99,16 +99,16 @@ class App extends Component {
       <div>
         <NavBar
           {...this.props}
-          loginstate={this.state.loginToken}
+          loginState={this.state.loginToken}
           userInfo={this.state.user}
           logoutState={this.changeStateWithLogout}
         />
         <Routes
           {...this.props}
           userInfo={this.state.user}
-          loginstate={this.state.loginToken}
-          updateAppToken={this.state.changeStateWithLoginOrSignup}
-          updateUser={this.state.changeStateWithEditUser}
+          loginState={this.state.loginToken}
+          updateAppToken={this.changeStateWithLoginOrSignup}
+          updateUser={this.changeStateWithEditUser}
         />
       </div>
     );
