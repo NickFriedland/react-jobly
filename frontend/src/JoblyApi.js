@@ -62,8 +62,8 @@ class JoblyApi {
 
   static async applyForJob(id) {
     console.log('inside JoblyApi, applyForJob');
-    let res = await this.request(`jobs/${id}/apply`, 'post');
-    return res.job;
+    let res = await this.request(`jobs/${id}/apply`, {}, 'post');
+    return res;
   }
 
   //calls register function in user route '/' which calls the register function in the model with data which will be accessed as data.username
@@ -86,7 +86,7 @@ class JoblyApi {
 
     let res = await this.request(`users/${username}`);
     console.log('in joblyapi.js getUser, res is', res);
-    return res;
+    return res.user;
   }
 
   static async updateUser(profile) {

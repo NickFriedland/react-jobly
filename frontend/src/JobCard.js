@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //import './JobCard.css';
 // import styled from 'styled-components';
+import JoblyApi from './JoblyApi';
 
 class JobCard extends Component {
   constructor(props) {
@@ -11,8 +12,11 @@ class JobCard extends Component {
     this.toggleApplied = this.toggleApplied.bind(this);
   }
 
-  toggleApplied() {
-    this.setState();
+  async toggleApplied() {
+    // console.log('JOB APPLIED API CALL', id);
+    let response = await JoblyApi.applyForJob(this.props.job.id);
+    console.log('APPLIED RESPONSE', response);
+    this.setState({ applied: true });
   }
 
   render() {
@@ -25,12 +29,15 @@ class JobCard extends Component {
                 <b>{this.props.job.title}</b>
               </div>
               <div className="col-2">
-                <button
-                  onClick={this.toggleApplied}
-                  className="apply-button danger"
-                >
-                  Applied
-                </button>
+                {this.state.applied ? (
+                  <button className="btn-success" disabled>
+                    Applied
+                  </button>
+                ) : (
+                  <button onClick={this.toggleApplied} className="btn-danger">
+                    Apply
+                  </button>
+                )}
               </div>
               <div className="col-10">
                 <p>{this.props.job.salary}</p>
