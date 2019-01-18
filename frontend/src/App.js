@@ -71,6 +71,7 @@ class App extends Component {
       token
     );
     this.setState({ loginToken: token });
+    this.props.history.replace('/jobs');
   }
 
   changeStateWithEditUser(userInfo) {
@@ -85,7 +86,7 @@ class App extends Component {
     console.log('In App.js Logout function');
     localStorage.clear();
     this.setState({ loginToken: '' });
-    return <Redirect to="/" />;
+    this.props.history.replace('/');
   }
 
   render() {
@@ -115,4 +116,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

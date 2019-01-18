@@ -19,6 +19,10 @@ class Profile extends Component {
     this.editProfile = this.editProfile.bind(this);
   }
 
+  async componentDidMount() {
+    this.setState(this.props.userInfo);
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
     console.log(

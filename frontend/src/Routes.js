@@ -13,6 +13,7 @@ import ProtectedRoute from './ProtectedRoute';
 
 class Routes extends Component {
   render() {
+    console.log('---Inside Routes.js render() ', this.props);
     return (
       <div className="Routes">
         <Switch>
@@ -45,7 +46,7 @@ class Routes extends Component {
             {...this.props}
             exact
             path="/profile"
-            render={() => <Profile />}
+            render={props => <Profile {...this.props} {...props} />}
           />
           <Route exact path="/" render={() => <Home />} />
           <Route render={() => <NotFound />} />
