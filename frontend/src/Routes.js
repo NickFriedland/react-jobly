@@ -9,7 +9,6 @@ import Jobs from './Jobs.js';
 import Profile from './Profile.js';
 import NotFound from './NotFound.js';
 import Search from './Search.js';
-import Logout from './Logout.js';
 import ProtectedRoute from './ProtectedRoute';
 
 class Routes extends Component {
@@ -22,12 +21,6 @@ class Routes extends Component {
             exact
             path="/login"
             render={props => <Login {...this.props} {...props} />}
-          />
-          <Route
-            {...this.props}
-            exact
-            path="/logout"
-            render={() => <Logout />}
           />
 
           <ProtectedRoute
