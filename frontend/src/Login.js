@@ -21,30 +21,6 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  getStoreToken(response) {
-    console.log(
-      '---inside login.js, function getStoreToken, response is ',
-      response
-    );
-    //This didnt work
-    // //Creates a user object to send to the createToken file (backend)
-    // let userObject = {
-    //   user: {
-    //     username: this.state.username,
-    //     is_admin: this.state.is_admin
-    //   }
-    // };
-
-    //get token from createToken file imported above ??Do we need this
-    let obtainedToken = response.token;
-
-    //Store token locally
-    localStorage.setItem('token', obtainedToken);
-    localStorage.setItem('username', this.state.username);
-    console.log(localStorage);
-    return obtainedToken;
-  }
-
   async handleSubmit(evt) {
     evt.preventDefault();
     // runs on submit
@@ -85,7 +61,10 @@ class Login extends Component {
       );
 
       // also get token and set token locally
-      this.getStoreToken(response);
+      let token = this.getStoreToken(response);
+
+      //update the token in App.js
+      this.prop.updateAppToken(token);
 
       return <Redirect to="/companies" />; // not working
       // this.props.history.push('/companies');
@@ -102,13 +81,40 @@ class Login extends Component {
       console.log('Inside login.js, login function, this.state ', this.state);
 
       // also get token and set token locally
-      this.getStoreToken(response);
+      let token = this.getStoreToken(response);
+
+      //update the token in App.js
+      // this.prop.updateAppToken(token);
 
       // this.props.history.push('/companies');
       return <Redirect to="/companies" />; // not working
     } catch (error) {
       throw new Error('USER login failed');
     }
+  }
+
+  getStoreToken(response) {
+    console.log(
+      '---inside login.js, function getStoreToken, response is ',
+      response
+    );
+    //This didnt work
+    // //Creates a user object to send to the createToken file (backend)
+    // let userObject = {
+    //   user: {
+    //     username: this.state.username,
+    //     is_admin: this.state.is_admin
+    //   }
+    // };
+
+    //get token from createToken file imported above ??Do we need this
+    let obtainedToken = response.token;
+
+    //Store token locally
+    localStorage.setItem('token', obtainedToken);
+    localStorage.setItem('username', this.state.username);
+    console.log(localStorage);
+    return obtainedToken;
   }
 
   // May not need handleChange

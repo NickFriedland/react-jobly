@@ -41,6 +41,8 @@ class Profile extends Component {
         'Inside profile.js, editProfile function, this.state ',
         this.state
       );
+      // Update state.user in App.js
+      this.props.updateUser(this.state);
 
       return <Redirect to="/jobs" />; // not working
     } catch (error) {

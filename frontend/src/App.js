@@ -13,7 +13,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { user: {}, loginToken: '' };
-    this.checkLoggedInfrontEnd = this.checkLoggedInfrontEnd.bind(this);
+    this.checkLocalStorageLogin = this.checkLocalStorageLogin.bind(this);
+    this.changeStateWithEditUser = this.changeStateWithEditUser.bind(this);
+    this.changeStateWithLoginOrSignup = this.changeStateWithLoginOrSignup.bind(
+      this
+    );
     console.log("--- App's this.state ", this.state);
   }
 
@@ -59,6 +63,22 @@ class App extends Component {
     );
   }
 
+  changeStateWithLoginOrSignup(token) {
+    console.log(
+      'in App.js, inside changeStateWithLoginOrSignup, token is',
+      token
+    );
+    this.setState({ loginToken: token });
+  }
+
+  changeStateWithEditUser(userInfo) {
+    console.log(
+      'in App.js, inside changeStateWithLoginOrSignup, userInfo is',
+      userInfo
+    );
+    this.setState({ user: userInfo });
+  }
+
   render() {
     // console.log('Inside App.js');
     // JoblyApi.getCompany('apple').then(res => console.log('get company', res));
@@ -73,7 +93,13 @@ class App extends Component {
           loginstate={this.state.loginToken}
           userInfo={this.state.user}
         />
-        <Routes {...this.props} />
+        <Routes
+          {...this.props}
+          userInfo={this.state.user}
+          loginstate={this.state.loginToken}
+          updateAppToken={this.state.changeStateWithLoginOrSignup}
+          updateUser={this.state.changeStateWithEditUser}
+        />
       </div>
     );
   }

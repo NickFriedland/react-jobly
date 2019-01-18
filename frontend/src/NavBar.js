@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import LOGGED_IN from './App.js';
+import App from './App';
 
 // import './NavBar.css';
 
@@ -41,8 +41,7 @@ class NavBar extends Component {
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            {localStorage.getItem('token') &&
-            localStorage.getItem('username') ? (
+            {this.props.loginstate ? (
               <NavLink exact to="/logout" className="nav-link">
                 Logout
               </NavLink>
@@ -59,3 +58,15 @@ class NavBar extends Component {
 }
 
 export default NavBar;
+
+// {
+//   localStorage.getItem('token') && localStorage.getItem('username') ? (
+//     <NavLink exact to="/logout" className="nav-link">
+//       Logout
+//     </NavLink>
+//   ) : (
+//     <NavLink exact to="/login" className="nav-link">
+//       Login
+//     </NavLink>
+//   );
+// }
