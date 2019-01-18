@@ -26,7 +26,6 @@ class Companies extends Component {
   }
 
   async searchCompanies(searchTerm) {
-    console.log('SearchTerm Companies.js', searchTerm);
     try {
       let response = await JoblyApi.searchCompanies(searchTerm);
       this.setState({ companies: response });
@@ -42,8 +41,8 @@ class Companies extends Component {
           <div className="col-md-10 offset-md-1">
             <Search searchFilter={this.searchCompanies} />
             {this.state.companies.map(company => (
-              <Link to={`/companies/${company.handle}`}>
-                <CompanyCard company={company} />
+              <Link key={company.handle} to={`/companies/${company.handle}`}>
+                <CompanyCard company={company} key={company.handle} />
               </Link>
             ))}
           </div>

@@ -40,7 +40,7 @@ class Jobs extends Component {
           <div className="col-md-10 offset-md-1">
             <Search searchFilter={this.searchJobs} />
             {this.state.jobs.map(job => (
-              <JobCard job={job} />
+              <JobCard key={job.id} job={job} />
             ))}
           </div>
         </div>
@@ -51,5 +51,4 @@ class Jobs extends Component {
 
 export default Jobs;
 
-// Test call for the API
 // JoblyApi.getJob('1').then(res => console.log('get job', res));
