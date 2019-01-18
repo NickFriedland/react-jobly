@@ -31,6 +31,7 @@ class Company extends Component {
   }
 
   render() {
+    console.log('USER DATA', this.props.user);
     return (
       <div className="Company">
         <div className="container">
@@ -39,7 +40,7 @@ class Company extends Component {
               <h5>{this.state.name}</h5>
               <p>{this.state.description}</p>
               {this.state.jobs.map(job => (
-                <JobCard key={job.id} job={job} />
+                <JobCard key={job.id} job={job} user={this.props.user} />
               ))}
             </div>
           </div>
