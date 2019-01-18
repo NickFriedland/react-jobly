@@ -13,7 +13,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: {}, loginToken: '', tokenBeforeRender: false };
+    this.state = { user: {}, loginToken: '', loaded: false };
     this.checkLocalStorageLogin = this.checkLocalStorageLogin.bind(this);
     this.changeStateWithEditUser = this.changeStateWithEditUser.bind(this);
     this.changeStateWithLoginOrSignup = this.changeStateWithLoginOrSignup.bind(
@@ -35,11 +35,7 @@ class App extends Component {
     if (token) {
       let response = await JoblyApi.getUser(username);
       console.log('in app.js, cdidMount, response is', response);
-      this.setState({ loginToken: token });
-
-      console.log('In app.js, cDidMount, state is ', this.state);
-      this.setState({ user: response });
-      console.log('in app.js, componentDidMount', this.state);
+      this.setState({ user: response, loginToken: token, loaded: true });
     }
   }
 
@@ -91,7 +87,7 @@ class App extends Component {
     // JoblyApi.getCompanies('/').then(res => console.log('get companies', res));
     // JoblyApi.searchCompanies('apple inc').then(res =>
     //   console.log('search companies', res)
-    return (
+    return this.state.loaded ? (
       <div>
         <NavBar
           {...this.props}
@@ -107,6 +103,8 @@ class App extends Component {
           updateUser={this.changeStateWithEditUser}
         />
       </div>
+    ) : (
+      <div>LOADING...</div>
     );
   }
 }
