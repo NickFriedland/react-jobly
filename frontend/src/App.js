@@ -3,16 +3,42 @@ import logo from './logo.svg';
 import './App.css';
 import Routes from './Routes.js';
 import NavBar from './NavBar.js';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 import JoblyApi from './JoblyApi.js'; //For testing only
 
 // global flag to easily tell if we're logged in
-let LOGGED_IN = undefined;
-
+// let LOGGED_IN = undefined;
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { loginState: false };
-    this.checkLocalStorageLogin = this.checkLocalStorageLogin.bind(this);
+    this.state = { user: {}, loginToken: '' };
+    this.checkLoggedInfrontEnd = this.checkLoggedInfrontEnd.bind(this);
+    console.log("--- App's this.state ", this.state);
+  }
+
+  async componentDidMount() {
+    try {
+      let token = localStorage.getItem('token');
+      let username = localStorage.getItem('username');
+      console.log(
+        '--In App.js, CdidMount, token from local storage is ',
+        token,
+        'username is',
+        username
+      );
+      if (token) {
+        let response = await JoblyApi.getUser(username);
+        console.log('in app.js, cdidMount, response is', response);
+        this.setState({ loginState: token });
+
+        console.log('In app.js, cDidMount, state is ', this.state);
+        this.setState({ user: response });
+        console.log('in app.js, componentDidMount', this.state);
+      }
+    } catch (error) {
+      throw new Error('Getting user error');
+    }
   }
 
   // componentDiDMount to check for state change - local storage login
@@ -23,10 +49,14 @@ class App extends Component {
     let username = localStorage.getItem('username');
 
     if (token && username) {
-      LOGGED_IN = true;
-      this.setState({ loginState: LOGGED_IN });
+      this.setState({ loginToken: token });
     }
-    console.log('---in App.js, state = ', this.state, 'Logged-In ', LOGGED_IN);
+    console.log(
+      '---in App.js, state = ',
+      this.state,
+      'Logged-In state.loginToken ',
+      this.state.loginToken
+    );
   }
 
   render() {
@@ -38,8 +68,12 @@ class App extends Component {
 
     return (
       <div>
-        <NavBar loginstate={LOGGED_IN} />
-        <Routes />
+        <NavBar
+          {...this.props}
+          loginstate={this.state.loginToken}
+          userInfo={this.state.user}
+        />
+        <Routes {...this.props} />
       </div>
     );
   }

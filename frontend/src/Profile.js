@@ -1,81 +1,135 @@
 import React, { Component } from 'react';
+import JoblyApi from './JoblyApi';
+import { Switch, Route, Redirect } from 'react-router-dom';
 //import './Profile.css';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      username: '',
+      password: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      photo_url: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.editProfile = this.editProfile.bind(this);
   }
-
-  /**
-   * This function fetches user information from the API
-   *  at /users/{username} using a token. Then it sets all the
-   *  appropriate instance properties from the response.
-   *  Finally it invokes a callback with the current user instance.
-   * @param {Function} cb a callback to invoke when completed
-   */
-  // retrieveDetails(cb) {
-  //   $.getJSON(
-  //     `${BASE_URL}/users/${this.username}`,
-  //     { token: this.loginToken },
-  //     response => {
-  //       // update all of the user's properties from the API response
-  //       this.name = response.user.name;
-  //       this.createdAt = response.user.createdAt;
-  //       this.updatedAt = response.user.updatedAt;
-  //       // remember to convert the user's favorites and ownStories into instances of Story
-  //       this.favorites = response.user.favorites.map(story => new Story(story));
-  //       this.ownStories = response.user.stories.map(story => new Story(story));
-
-  //       // pass the current user instance to the supplied callback
-  //       return cb(this);
-  //     }
-  //   );
-  // }
-
-  /**
-   * Send a PATCH request to the API in order to update the user
-   * @param {Object} userData - the user properties you want to update
-   * @param {Function} cb - a callback function to invoke upon success
-   */
-  // update(userData, cb) {
-  //   $.ajax({
-  //     url: `${BASE_URL}/users/${this.username}`,
-  //     method: 'PATCH',
-  //     data: {
-  //       user: userData,
-  //       token: this.loginToken
-  //     },
-  //     success: response => {
-  //       // "name" is really the only property you can update
-  //       this.name = response.user.name;
-
-  //       // Note: you can also update "password" but we're not storing it
-
-  //       // pass the current user instance to the supplied callback
-  //       return cb(this);
-  //     }
-  //   });
-  // }
 
   handleSubmit(evt) {
-    // runs on every keystroke
-    this.setState({
-      fullName: evt.target.value
-    });
+    evt.preventDefault();
+    console.log(
+      '--- inside profile.js, handleSubmit function, evt is ',
+      evt,
+      'state is ',
+      this.state
+    );
+
+    this.editProfile();
+
+    return <Redirect to="/jobs" />;
   }
 
+  async editProfile() {
+    try {
+      let response = await JoblyApi.updateUser(this.state);
+      this.setState({ ...response }); // Get clarification about this
+      console.log(
+        'Inside profile.js, editProfile function, this.state ',
+        this.state
+      );
+
+      return <Redirect to="/jobs" />; // not working
+    } catch (error) {
+      throw new Error('USER update error');
+    }
+  }
   handleChange(evt) {
     // runs on every keystroke
     this.setState({
-      fullName: evt.target.value
+      [evt.target.name]: evt.target.value
     });
   }
 
   render() {
     return (
       <div className="Profile">
-        <h1>Hello From Profile</h1>;
+        <div className="pt-5">
+          <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            <div className="card">
+              <div className="card-body">
+                <form className="form-inline" onSubmit={this.handleSubmit}>
+                  <div className="form-group">
+                    <label>Username</label>
+                    <input
+                      name="username"
+                      type="text"
+                      className="form-control"
+                      onChange={this.handleChange}
+                      value={this.state.username}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Password</label>
+                    <input
+                      name="password"
+                      type="text"
+                      className="form-control"
+                      onChange={this.handleChange}
+                      value={this.state.password}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>First Name</label>
+                    <input
+                      name="first_name"
+                      type="text"
+                      className="form-control"
+                      onChange={this.handleChange}
+                      value={this.state.first_name}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Last Name</label>
+                    <input
+                      name="last_name"
+                      type="text"
+                      className="form-control"
+                      onChange={this.handleChange}
+                      value={this.state.last_name}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Email</label>
+                    <input
+                      name="email"
+                      type="text"
+                      className="form-control"
+                      onChange={this.handleChange}
+                      value={this.state.email}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Photo URL</label>
+                    <input
+                      name="photo_url"
+                      type="url"
+                      className="form-control"
+                      onChange={this.handleChange}
+                      value={this.state.photo_url}
+                    />
+                  </div>
+                  <button className="btn btn-primary float-right" type="submit">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

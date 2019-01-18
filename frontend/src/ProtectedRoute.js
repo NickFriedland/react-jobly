@@ -10,57 +10,46 @@ import Profile from './Profile.js';
 import NotFound from './NotFound.js';
 import Search from './Search.js';
 import Logout from './Logout.js';
-import ProtectedRoute from './ProtectedRoute';
 
-class Routes extends Component {
+class ProtectedRoute extends Component {
   render() {
-    return (
-      <div className="Routes">
+    if (this.props.logged_in) {
+      return <Redirect to="/login" />;
+    } else
+      return (
         <Switch>
-          <Route {...this.props} exact path="/login" render={() => <Login />} />
           <Route
-            {...this.props}
-            exact
-            path="/logout"
-            render={() => <Logout />}
-          />
-          <ProtectedRoute
             {...this.props}
             exact
             path="./:companyOrJob"
             render={props => <Search {...props} />}
           />
-          <ProtectedRoute
+          <Route
             {...this.props}
             exact
             path="/companies"
             render={() => <Companies />}
           />
-          <ProtectedRoute
+          <Route
             {...this.props}
             exact
             path="/companies/:company"
             render={routeProps => <Company {...routeProps} />}
           />
-          <ProtectedRoute
-            {...this.props}
-            exact
-            path="/jobs"
-            render={() => <Jobs />}
-          />
-          <ProtectedRoute
+          <Route {...this.props} exact path="/jobs" render={() => <Jobs />} />
+          <Route
             {...this.props}
             exact
             path="/profile"
             render={() => <Profile />}
           />
+
           <Route exact path="/" render={() => <Home />} />
           <Route render={() => <NotFound />} />
           <Redirect to="/" />
         </Switch>
-      </div>
-    );
+      );
   }
 }
 
-export default Routes;
+export default ProtectedRoute;
