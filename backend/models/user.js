@@ -99,6 +99,7 @@ class User {
   /** Given a username, return data about user. */
 
   static async findOne(username) {
+    console.log('in user.js models, findONe, username is', username);
     const userRes = await db.query(
       `SELECT username, first_name, last_name, email, photo_url 
             FROM users 

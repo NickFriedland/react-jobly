@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import JoblyApi from './JoblyApi.js';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -8,13 +9,10 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      // hashedPassword: '',
       first_name: '',
       last_name: '',
-      email: ''
-      // photo_url: '',
-      // loginToken: '',
-      // is_admin: ''
+      email: '',
+      photo_url: ''
     };
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
@@ -73,6 +71,7 @@ class Login extends Component {
     } else {
       this.login();
     }
+    return <Redirect to="/companies" />;
   }
 
   //Modify this. See what data needs to go to createUser function
@@ -87,6 +86,9 @@ class Login extends Component {
 
       // also get token and set token locally
       this.getStoreToken(response);
+
+      return <Redirect to="/companies" />; // not working
+      // this.props.history.push('/companies');
     } catch (error) {
       throw new Error('USER register error');
     }
@@ -94,14 +96,18 @@ class Login extends Component {
 
   async login() {
     try {
+      console.log('Inside login.js, login function, this.state is', this.state);
       let response = await JoblyApi.loginUser(this.state);
       this.setState({ ...response });
       console.log('Inside login.js, login function, this.state ', this.state);
 
       // also get token and set token locally
       this.getStoreToken(response);
+
+      // this.props.history.push('/companies');
+      return <Redirect to="/companies" />; // not working
     } catch (error) {
-      throw new Error('USER registration failed');
+      throw new Error('USER login failed');
     }
   }
 

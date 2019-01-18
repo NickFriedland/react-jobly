@@ -27,6 +27,10 @@ router.get('/', authRequired, async function(req, res, next) {
 
 router.get('/:username', authRequired, async function(req, res, next) {
   try {
+    console.log(
+      'in users.js rounter, in try, req.params.username is ',
+      req.params.username
+    );
     const user = await User.findOne(req.params.username);
     return res.json({ user });
   } catch (err) {
@@ -61,10 +65,11 @@ router.post('/', async function(req, res, next) {
 
 router.patch('/:username', ensureCorrectUser, async function(req, res, next) {
   try {
-    if ('username' in req.body || 'is_admin' in req.body) {
-      return next({ status: 400, message: 'Not allowed' });
-    }
-
+    console.log('---In users route, patch username, req.body is ', req.body);
+    // if ('username' in req.body || 'is_admin' in req.body) {
+    //   return next({ status: 400, message: 'Not allowed' });
+    // }
+    console.log('---In users.js, patch username, pre validation');
     const validation = validate(req.body, userUpdateSchema);
     if (!validation.valid) {
       return next({

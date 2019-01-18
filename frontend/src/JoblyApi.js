@@ -60,6 +60,12 @@ class JoblyApi {
     return res.jobs;
   }
 
+  static async applyForJob(id) {
+    console.log('inside JoblyApi, applyForJob');
+    let res = await this.request(`jobs/${id}/apply`, 'post');
+    return res.job;
+  }
+
   //calls register function in user route '/' which calls the register function in the model with data which will be accessed as data.username
   static async createUser(data) {
     console.log('Inside createUser');
@@ -69,8 +75,36 @@ class JoblyApi {
 
   // This hits /login which calls User.authenticate which has req.body as its argument
   static async loginUser(data) {
-    console.log('Inside loginUser');
+    console.log('Inside loginUser, data is ', data);
     let res = await this.request(`login`, data, 'post');
+    console.log('inside JoblyApi, loginuser, res is ', res);
+    return res;
+  }
+
+  static async getUser(username) {
+    console.log('in joblyapi.js getUser, username is', username);
+
+    let res = await this.request(`users/${username}`);
+    console.log('in joblyapi.js getUser, res is', res);
+    return res;
+  }
+
+  static async updateUser(profile) {
+    console.log('in joblyapi.js updateUser, profile is', profile);
+    //Have to strip username off
+    let profileUpdate = {
+      password: profile.password,
+      first_name: profile.first_name,
+      last_name: profile.last_name,
+      email: profile.email,
+      photo_url: profile.photo_url
+    };
+    let res = await this.request(
+      `users/${profile.username}`,
+      profileUpdate,
+      'patch'
+    );
+    console.log('in joblyapi.js updateUser, res is', res);
     return res;
   }
 }
