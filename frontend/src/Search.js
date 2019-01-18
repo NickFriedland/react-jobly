@@ -40,8 +40,8 @@ class Search extends Component {
             aria-label="Recipient's username"
             aria-describedby="button-addon2"
           />
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
+          <div className="input-group-append">
+            <button className="btn btn-primary" type="submit">
               Submit
             </button>
           </div>

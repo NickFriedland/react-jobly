@@ -14,9 +14,8 @@ class App extends Component {
     // console.log('Inside App.js');
     // JoblyApi.getCompany('apple').then(res => console.log('get company', res));
     // JoblyApi.getCompanies('/').then(res => console.log('get companies', res));
-    JoblyApi.searchCompanies('apple inc').then(res =>
-      console.log('search companies', res)
-    );
+    // JoblyApi.searchCompanies('apple inc').then(res =>
+    //   console.log('search companies', res)
 
     return (
       <div>

@@ -11,8 +11,9 @@ class Company extends Component {
 
   async componentDidMount(handle) {
     try {
+      const handle = this.props.match.params.company;
       let response = await JoblyApi.getCompany(handle);
-      this.setState({ jobs: response });
+      this.setState({ jobs: response.jobs });
     } catch (error) {
       throw new Error('Jobs did not mount');
     }
@@ -25,7 +26,7 @@ class Company extends Component {
           <div className="row">
             <div className="col-md-10 offset-md-1">
               {this.state.jobs.map(job => (
-                <JobCard job={job} />
+                <JobCard key={job.id} job={job} />
               ))}
             </div>
           </div>
