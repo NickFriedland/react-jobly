@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { user: {}, loginToken: '' };
-    this.checkLoggedInfrontEnd = this.checkLoggedInfrontEnd.bind(this);
+    this.checkLocalStorageLogin = this.checkLocalStorageLogin.bind(this);
     console.log("--- App's this.state ", this.state);
   }
 
