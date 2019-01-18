@@ -16,22 +16,14 @@ class Companies extends Component {
   }
 
   async componentDidMount() {
-    try {
-      let response = await JoblyApi.getCompanies('/');
-      // console.log('get companies', companies);
-      this.setState({ companies: response });
-    } catch (error) {
-      throw new Error('COMPANIES GET ALL ERROR');
-    }
+    let response = await JoblyApi.getCompanies('/');
+    // console.log('get companies', companies);
+    this.setState({ companies: response });
   }
 
   async searchCompanies(searchTerm) {
-    try {
-      let response = await JoblyApi.searchCompanies(searchTerm);
-      this.setState({ companies: response });
-    } catch (error) {
-      throw new Error('COMPANY SEARCH ERR');
-    }
+    let response = await JoblyApi.searchCompanies(searchTerm);
+    this.setState({ companies: response });
   }
 
   passCompanyInfo = handle => {

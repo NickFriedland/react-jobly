@@ -38,21 +38,18 @@ class Profile extends Component {
   }
 
   async editProfile() {
-    try {
-      let response = await JoblyApi.updateUser(this.state);
-      this.setState({ ...response }); // Get clarification about this
-      console.log(
-        'Inside profile.js, editProfile function, this.state ',
-        this.state
-      );
-      // Update state.user in App.js
-      this.props.updateUser(this.state);
+    let response = await JoblyApi.updateUser(this.state);
+    this.setState({ ...response }); // Get clarification about this
+    console.log(
+      'Inside profile.js, editProfile function, this.state ',
+      this.state
+    );
+    // Update state.user in App.js
+    this.props.updateUser(this.state);
 
-      return <Redirect to="/jobs" />; // not working
-    } catch (error) {
-      throw new Error('USER update error');
-    }
+    return <Redirect to="/jobs" />; // not working
   }
+
   handleChange(evt) {
     // runs on every keystroke
     this.setState({
