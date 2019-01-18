@@ -32,10 +32,13 @@ class App extends Component {
       'username is',
       username
     );
+
     if (token) {
       let response = await JoblyApi.getUser(username);
       console.log('in app.js, cdidMount, response is', response);
       this.setState({ user: response, loginToken: token, loaded: true });
+    } else {
+      this.setState({ loaded: true });
     }
   }
 
