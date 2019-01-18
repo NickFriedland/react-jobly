@@ -13,6 +13,9 @@ class Company extends Component {
     };
   }
 
+  /* DELETEING try/catch causes const handle to break 
+  (See: syntax on JobCard for url params)
+  */
   async componentDidMount(handle) {
     try {
       const handle = this.props.match.params.company;

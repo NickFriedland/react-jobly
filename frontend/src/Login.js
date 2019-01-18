@@ -52,45 +52,33 @@ class Login extends Component {
 
   //Modify this. See what data needs to go to createUser function
   async register() {
-    try {
-      let response = await JoblyApi.createUser(this.state);
-      this.setState({ ...response });
-      console.log(
-        'Inside login.js, register function, this.state ',
-        this.state
-      );
+    let response = await JoblyApi.createUser(this.state);
+    this.setState({ ...response });
+    console.log('Inside login.js, register function, this.state ', this.state);
 
-      // also get token and set token locally
-      let token = this.getStoreToken(response);
+    // also get token and set token locally
+    let token = this.getStoreToken(response);
 
-      //update the token in App.js
-      this.prop.updateAppToken(token);
+    //update the token in App.js
+    this.props.updateAppToken(token);
 
-      return <Redirect to="/companies" />; // not working
-      // this.props.history.push('/companies');
-    } catch (error) {
-      throw new Error('USER register error');
-    }
+    this.props.history.push('/jobs');
+    // this.props.history.push('/companies');
   }
 
   async login() {
-    try {
-      console.log('Inside login.js, login function, this.state is', this.state);
-      let response = await JoblyApi.loginUser(this.state);
-      this.setState({ ...response });
-      console.log('Inside login.js, login function, this.state ', this.state);
+    console.log('Inside login.js, login function, this.state is', this.state);
+    let response = await JoblyApi.loginUser(this.state);
+    this.setState({ ...response });
+    console.log('Inside login.js, login function, this.state ', this.state);
 
-      // also get token and set token locally
-      let token = this.getStoreToken(response);
+    // also get token and set token locally
+    let token = this.getStoreToken(response);
 
-      //update the token in App.js
-      // this.prop.updateAppToken(token);
+    //update the token in App.js
+    this.props.updateAppToken(token);
 
-      // this.props.history.push('/companies');
-      return <Redirect to="/companies" />; // not working
-    } catch (error) {
-      throw new Error('USER login failed');
-    }
+    this.props.history.push('/jobs');
   }
 
   getStoreToken(response) {

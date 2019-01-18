@@ -34,7 +34,7 @@ class App extends Component {
       if (token) {
         let response = await JoblyApi.getUser(username);
         console.log('in app.js, cdidMount, response is', response);
-        this.setState({ loginState: token });
+        this.setState({ loginToken: token });
 
         console.log('In app.js, cDidMount, state is ', this.state);
         this.setState({ user: response });
@@ -90,15 +90,15 @@ class App extends Component {
       <div>
         <NavBar
           {...this.props}
-          loginstate={this.state.loginToken}
+          loginState={this.state.loginToken}
           userInfo={this.state.user}
         />
         <Routes
           {...this.props}
           userInfo={this.state.user}
-          loginstate={this.state.loginToken}
-          updateAppToken={this.state.changeStateWithLoginOrSignup}
-          updateUser={this.state.changeStateWithEditUser}
+          loginState={this.state.loginToken}
+          updateAppToken={this.changeStateWithLoginOrSignup}
+          updateUser={this.changeStateWithEditUser}
         />
       </div>
     );
