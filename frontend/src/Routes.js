@@ -8,16 +8,18 @@ import Company from './Company.js';
 import Jobs from './Jobs.js';
 import Profile from './Profile.js';
 import NotFound from './NotFound.js';
-import Search from './Search.js';
+// import Search from './Search.js';
 import ProtectedRoute from './ProtectedRoute';
 
 class Routes extends Component {
   render() {
+    // console.log('ROUTE PROPS', this.props);
     return (
       <div className="Routes">
         <Switch>
           <Route
             {...this.props}
+            loginState={this.props.loginState}
             exact
             path="/login"
             render={props => <Login {...this.props} {...props} />}
@@ -33,7 +35,7 @@ class Routes extends Component {
             {...this.props}
             exact
             path="/companies/:company"
-            render={routeProps => <Company {...routeProps} />}
+            render={props => <Company {...props} />}
           />
           <ProtectedRoute
             {...this.props}

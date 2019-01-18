@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Routes from './Routes.js';
 import NavBar from './NavBar.js';
 import { withRouter } from 'react-router';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import JoblyApi from './JoblyApi.js'; //For testing only
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: {}, loginToken: '' };
+    this.state = { user: {}, loginToken: '', tokenBeforeRender: false };
     this.checkLocalStorageLogin = this.checkLocalStorageLogin.bind(this);
     this.changeStateWithEditUser = this.changeStateWithEditUser.bind(this);
     this.changeStateWithLoginOrSignup = this.changeStateWithLoginOrSignup.bind(
@@ -24,26 +24,22 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    try {
-      let token = localStorage.getItem('token');
-      let username = localStorage.getItem('username');
-      console.log(
-        '--In App.js, CdidMount, token from local storage is ',
-        token,
-        'username is',
-        username
-      );
-      if (token) {
-        let response = await JoblyApi.getUser(username);
-        console.log('in app.js, cdidMount, response is', response);
-        this.setState({ loginToken: token });
+    let token = localStorage.getItem('token');
+    let username = localStorage.getItem('username');
+    console.log(
+      '--In App.js, CdidMount, token from local storage is ',
+      token,
+      'username is',
+      username
+    );
+    if (token) {
+      let response = await JoblyApi.getUser(username);
+      console.log('in app.js, cdidMount, response is', response);
+      this.setState({ loginToken: token });
 
-        console.log('In app.js, cDidMount, state is ', this.state);
-        this.setState({ user: response });
-        console.log('in app.js, componentDidMount', this.state);
-      }
-    } catch (error) {
-      throw new Error('Getting user error');
+      console.log('In app.js, cDidMount, state is ', this.state);
+      this.setState({ user: response });
+      console.log('in app.js, componentDidMount', this.state);
     }
   }
 
@@ -71,6 +67,7 @@ class App extends Component {
       token
     );
     this.setState({ loginToken: token });
+    this.props.history.replace('/jobs');
   }
 
   changeStateWithEditUser(userInfo) {
@@ -85,7 +82,7 @@ class App extends Component {
     console.log('In App.js Logout function');
     localStorage.clear();
     this.setState({ loginToken: '' });
-    return <Redirect to="/" />;
+    this.props.history.replace('/');
   }
 
   render() {
@@ -94,7 +91,6 @@ class App extends Component {
     // JoblyApi.getCompanies('/').then(res => console.log('get companies', res));
     // JoblyApi.searchCompanies('apple inc').then(res =>
     //   console.log('search companies', res)
-
     return (
       <div>
         <NavBar
@@ -115,4 +111,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
