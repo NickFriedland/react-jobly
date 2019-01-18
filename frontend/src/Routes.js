@@ -9,6 +9,7 @@ import Jobs from './Jobs.js';
 import Profile from './Profile.js';
 import NotFound from './NotFound.js';
 import Search from './Search.js';
+import Logout from './Logout.js';
 
 class Routes extends Component {
   render() {
@@ -16,6 +17,7 @@ class Routes extends Component {
       <div className="Routes">
         <Switch>
           <Route exact path="/login" render={() => <Login />} />
+          <Route exact path="/logout" render={() => <Logout />} />
           <Route
             exact
             path="./:companyOrJob"

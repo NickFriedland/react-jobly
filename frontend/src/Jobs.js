@@ -51,4 +51,5 @@ class Jobs extends Component {
 
 export default Jobs;
 
-JoblyApi.getJob('1').then(res => console.log('get job', res));
+// Test call for the API
+// JoblyApi.getJob('1').then(res => console.log('get job', res));

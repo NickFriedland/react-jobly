@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import LOGGED_IN from './App.js';
+
 // import './NavBar.css';
 
-// global flag to easily tell if we're logged in
-let LOGGED_IN = false;
 class NavBar extends Component {
   //PV added
   constructor(props) {
     super(props);
-    this.state = { loginState: false };
+    this.state = {};
   }
 
   // PV added
-  checkLoggedInfrontEnd() {
-    // let's see if we're logged in
-    let token = localStorage.getItem('token');
-    let username = localStorage.getItem('username');
-
-    if (token && username) {
-      LOGGED_IN = true;
-      this.setState({ loginState: LOGGED_IN });
-    }
-  }
 
   render() {
     // {
@@ -29,7 +19,6 @@ class NavBar extends Component {
     //     fontWeight: 'bold',
     //     color: 'mediumorchid'
     //   };
-
     return (
       <nav className="Navigation navbar sticky-top shadow-sm border-bottom navbar-expand-md mb-4 bg-white">
         <NavLink exact to="/" className="navbar-brand">
@@ -52,8 +41,8 @@ class NavBar extends Component {
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            {/* PV edits */}
-            {this.state.loginState ? (
+            {localStorage.getItem('token') &&
+            localStorage.getItem('username') ? (
               <NavLink exact to="/logout" className="nav-link">
                 Logout
               </NavLink>

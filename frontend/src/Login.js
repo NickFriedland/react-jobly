@@ -21,7 +21,6 @@ class Login extends Component {
     this.getStoreToken = this.getStoreToken.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    console.log('Inside Login constructor');
   }
 
   getStoreToken(response) {
@@ -58,15 +57,15 @@ class Login extends Component {
       this.state
     );
     //sets the state in this file with inputs from the form. Also adds a token from above
-    this.setState({
-      username: evt.target.username,
-      password: evt.target.password,
-      first_name: evt.target.first,
-      last_name: evt.target.last,
-      email: evt.target.email,
-      photo_url: evt.target.photo_url
-      // loginToken: this.getStoreToken()
-    });
+    // this.setState({
+    //   username: evt.target.username,
+    //   password: evt.target.password,
+    //   first_name: evt.target.first,
+    //   last_name: evt.target.last,
+    //   email: evt.target.email,
+    //   photo_url: evt.target.photo_url
+    //   // loginToken: this.getStoreToken()
+    // });
 
     //How to check if user exists inside the database???
     if (this.state.email) {
@@ -81,6 +80,10 @@ class Login extends Component {
     try {
       let response = await JoblyApi.createUser(this.state);
       this.setState({ ...response });
+      console.log(
+        'Inside login.js, register function, this.state ',
+        this.state
+      );
 
       // also get token and set token locally
       this.getStoreToken(response);
@@ -93,6 +96,7 @@ class Login extends Component {
     try {
       let response = await JoblyApi.loginUser(this.state);
       this.setState({ ...response });
+      console.log('Inside login.js, login function, this.state ', this.state);
 
       // also get token and set token locally
       this.getStoreToken(response);
