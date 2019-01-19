@@ -13,6 +13,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 class ProtectedRoute extends Component {
   render() {
+    console.log('in protected route', this.props);
     if (!this.props.loginState) {
       return <Redirect to="/login" />;
     } else return <Route {...this.props} />;

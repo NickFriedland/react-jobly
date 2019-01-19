@@ -13,38 +13,36 @@ import ProtectedRoute from './ProtectedRoute';
 
 class Routes extends Component {
   render() {
-    // console.log('ROUTE PROPS', this.props);
+    console.log('ROUTE PROPS', this.props);
     return (
       <div className="Routes">
         <Switch>
           <Route
-            {...this.props}
-            loginState={this.props.loginState}
             exact
             path="/login"
             render={props => <Login {...this.props} {...props} />}
           />
 
           <ProtectedRoute
-            {...this.props}
+            loginState={this.props.loginState}
             exact
             path="/companies"
             render={() => <Companies />}
           />
           <ProtectedRoute
-            {...this.props}
+            loginState={this.props.loginState}
             exact
             path="/companies/:company"
-            render={props => <Company {...props} />}
+            render={props => <Company {...this.props} {...props} />}
           />
           <ProtectedRoute
-            {...this.props}
+            loginState={this.props.loginState}
             exact
             path="/jobs"
             render={() => <Jobs />}
           />
           <ProtectedRoute
-            {...this.props}
+            loginState={this.props.loginState}
             exact
             path="/profile"
             render={props => <Profile {...this.props} {...props} />}

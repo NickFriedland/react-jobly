@@ -20,6 +20,7 @@ class App extends Component {
       this
     );
     this.changeStateWithLogout = this.changeStateWithLogout.bind(this);
+    this.refreshUser = this.refreshUser.bind(this);
     console.log("--- App's this.state ", this.state);
   }
 
@@ -40,6 +41,11 @@ class App extends Component {
     } else {
       this.setState({ loaded: true });
     }
+  }
+
+  async refreshUser() {
+    let response = await JoblyApi.getUser(localStorage.getItem('username'));
+    this.setState({ user: response });
   }
 
   // componentDiDMount to check for state change - local storage login
@@ -104,6 +110,7 @@ class App extends Component {
           loginState={this.state.loginToken}
           updateAppToken={this.changeStateWithLoginOrSignup}
           updateUser={this.changeStateWithEditUser}
+          refreshUser={this.refreshUser}
         />
       </div>
     ) : (

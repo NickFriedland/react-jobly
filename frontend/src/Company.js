@@ -16,22 +16,17 @@ class Company extends Component {
   /* DELETEING try/catch causes const handle to break 
   (See: syntax on JobCard for url params)
   */
-  async componentDidMount(handle) {
-    try {
-      const handle = this.props.match.params.company;
-      let response = await JoblyApi.getCompany(handle);
-      this.setState({
-        name: response.name,
-        description: response.description,
-        jobs: response.jobs
-      });
-    } catch (error) {
-      throw new Error('Jobs did not mount');
-    }
+  async componentDidMount() {
+    let response = await JoblyApi.getCompany(this.props.match.params.company);
+    this.setState({
+      name: response.name,
+      description: response.description,
+      jobs: response.jobs
+    });
   }
 
   render() {
-    console.log('USER DATA', this.props.user);
+    console.log('USER DATA', this.props.userInfo.jobs);
     return (
       <div className="Company">
         <div className="container">
@@ -40,7 +35,12 @@ class Company extends Component {
               <h5>{this.state.name}</h5>
               <p>{this.state.description}</p>
               {this.state.jobs.map(job => (
-                <JobCard key={job.id} job={job} user={this.props.user} />
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  appliedJobs={this.props.userInfo.jobs}
+                  refreshUser={this.props.refreshUser}
+                />
               ))}
             </div>
           </div>

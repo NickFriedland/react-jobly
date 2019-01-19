@@ -6,20 +6,34 @@ import JoblyApi from './JoblyApi';
 class JobCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      applied: false
-    };
+
     this.toggleApplied = this.toggleApplied.bind(this);
+    this.checkIfApplied = this.checkIfApplied.bind(this);
   }
 
   async toggleApplied() {
     // console.log('JOB APPLIED API CALL', id);
     let response = await JoblyApi.applyForJob(this.props.job.id);
     console.log('APPLIED RESPONSE', response);
-    this.setState({ applied: true });
+    this.props.refreshUser();
+  }
+
+  checkIfApplied() {
+    let userJobList = this.props.appliedJobs;
+    let jobCardId = this.props.job.id;
+    for (let i = 0; i < userJobList.length; i++) {
+      // console.log(userJobList[i]);
+      if (jobCardId === userJobList[i].id) {
+        return true;
+      }
+    }
   }
 
   render() {
+    // console.log('USER JOBS FROM APP', this.checkIfApplied());
+    // console.log('JOBS FROM URL PARAMS', this.props.job.id);
+    // this.checkIfApplied();
+
     return (
       <div className="JobCard">
         <div className="JobCard card mb-2 shadow-sm rounded">
@@ -29,7 +43,7 @@ class JobCard extends Component {
                 <b>{this.props.job.title}</b>
               </div>
               <div className="col-2">
-                {this.state.applied ? (
+                {this.checkIfApplied() ? (
                   <button className="btn-success" disabled>
                     Applied
                   </button>
